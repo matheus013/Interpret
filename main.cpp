@@ -3,34 +3,50 @@
 
 #include "interp.h"
 
-using namespace std;
-
 int main(int argc, char *argv[]) {
 
-    QVector<int> memory;
     Interp inter;
+    inter.startInfo();
 
     while(true) {
+        QVector<int> memory;
         QTextStream input(stdin);
         QStringList memoryInput =
                 input.readLine().split(QRegExp("\\W+"), QString::SkipEmptyParts);
 
-        for(int i = 0; i < memoryInput.length(); i++) {
-            QString arg = memoryInput.at(i);
-
-            if(!arg.compare("ADD")) {
-                memory.append(-10);
-            }
-            else if (!arg.compare("HALT")) {
-                memory.append(-5);
+        //Help menu
+        if(memoryInput.length() == 1) {
+            if(!QString::compare("h", memoryInput.at(0), Qt::CaseSensitive)) {
+                inter.availableOperationsInfo();
+                inter.usageInfo();
             }
             else {
-                memory.append(arg.toInt());
+                qDebug() << "Instrucao invalida";
+                inter.startInfo();
             }
-            //qDebug() << memoryInput.at(i);
         }
-        qDebug() << memory;
-        //inter.interpreter(memory,0);
+        //fill memory
+        else {
+            for(int i = 0; i < memoryInput.length(); i++) {
+                QString arg = memoryInput.at(i);
+
+                if(!arg.compare("ADD")) {//Sum operation
+                    memory.append(-10);
+                }
+                else if (!arg.compare("HALT")) { //Stop operation
+                    memory.append(-5);
+                }
+                else {
+                    memory.append(arg.toInt());
+                }
+            }
+            //We must always have a halt operation
+            //so the process will always stop
+            memory.append(-5);
+            memory.append(0);
+
+            //Interpre instructions
+            inter.interpreter(memory, 0);
+        }
     }
-   // memory << -10 << 2 << -10 << 1 << -5 << -3 << -5 << 0;
 }
