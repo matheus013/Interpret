@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
             memory.append(-5);
             memory.append(0);
 
-            //Interpreter instructions
+            //Interpret instructions
             inter.interpreter(memory, 0);
         }
     }
