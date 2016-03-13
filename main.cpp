@@ -4,6 +4,7 @@
 #include "interp.h"
 
 int main(int argc, char *argv[]) {
+    Q_UNUSED(argc); Q_UNUSED(argv);
 
     Interp inter;
     inter.startInfo();
@@ -21,6 +22,9 @@ int main(int argc, char *argv[]) {
                 inter.usageInfo();
             }
             else {
+                //Yep... informações em português e sem acentuação
+                //mesmo, não é que nós sejamos analfabetos...
+                //mas a situação exige.
                 qDebug() << "Instrucao invalida";
                 inter.startInfo();
             }
@@ -45,7 +49,7 @@ int main(int argc, char *argv[]) {
             memory.append(-5);
             memory.append(0);
 
-            //Interpre instructions
+            //Interpreter instructions
             inter.interpreter(memory, 0);
         }
     }
