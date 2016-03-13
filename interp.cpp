@@ -20,7 +20,7 @@ void Interp::interpreter(QVector<int> memory, int firstAddress) {
     }
 }
 
-run Interp::getInstrType(int inst){
+run Interp::getInstrType(int inst) {
     if(inst == -10) return ADD;
     if(inst == -5) return HALT;
     return ARG;
@@ -43,7 +43,7 @@ void Interp::execute(run type, int data) {
         qDebug() << ac;
         break;
     case ARG:
-        qDebug() << "instrunção invalida" << type;
+        qDebug() << "instrução invalida" << type;
         break;
     default:
         qDebug() << type << data;
