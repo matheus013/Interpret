@@ -1,30 +1,33 @@
 #pragma once
 #include <QVector>
 #include <QObject>
+
 enum run{
     ADD,
     HALT,
     ARG
 };
-class Interp : public QObject{
+
+class Interp : public QObject {
     Q_ENUM(run)
-     int pc;
-     int ac;
-     int instr;
-     run instrType;
-     int dataLoc;
-     int data;
-     bool runBit = true;
-     QVector<int> memory;
+    int m_pc;
+    int m_ac;
+    int m_instr;
+    run m_instrType;
+    int m_dataLoc;
+    int m_data;
+    bool m_runBit = true;
+    QVector<int> m_memory;
 
 public:
-     void interpreter(QVector<int> memory, int firstAddress);
+    void interpreter(QVector<int> memory, int firstAddress);
+    void availableOperationsInfo();
+    void startInfo();
+    void usageInfo();
+
 private:
-     void setMemory(const QVector<int> &value);
-     run getInstrType(int inst);
-     int findData(int instr, int type);
-     void execute(run type, int data);
-
-
-
+    void setMemory(const QVector<int> &value);
+    run getInstrType(int inst);
+    int findData(int instr, int type);
+    void execute(run type, int data);
 };
