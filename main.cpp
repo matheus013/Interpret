@@ -34,16 +34,16 @@ int main(int argc, char *argv[]) {
             for(int i = 0; i < memoryInput.length(); i++) {
                 QString arg = memoryInput.at(i);
 
-                if(!arg.compare("ADD")) {//Sum operation
+                if(!arg.compare("ADD")) {
                     memory.append(-10);
                 }
-                else if (!arg.compare("HALT")) { //Stop operation
-                    memory.append(-5);
+                else if (!arg.compare("HALT")) {
+                    memory << -5 << 0;
                 }
-                else if (!arg.compare("SUB")) { //Stop operation
+                else if (!arg.compare("SUB")) {
                     memory.append(-15);
                 }
-                else if (!arg.compare("MULT")) { //Stop operation
+                else if (!arg.compare("MULT")) {
                     memory.append(-20);
                 }
                 else {
@@ -55,8 +55,7 @@ int main(int argc, char *argv[]) {
             }
             //We must always have a halt operation
             //so the process will always stop
-            memory.append(-5);
-            memory.append(0);
+            memory << -5 << 0;
             (memory[0] == -20) ? memory.append(1) : memory.append(0);
             //Interpret instructions
             inter.interpreter(memory, 0);
