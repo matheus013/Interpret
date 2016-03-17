@@ -4,6 +4,8 @@
 
 enum run{
     ADD,
+    SUB,
+    MULT,
     HALT,
     ARG
 };
@@ -24,6 +26,7 @@ public:
     void availableOperationsInfo();
     void startInfo();
     void usageInfo();
+    bool valid(QString arg);
 
 private:
     void setMemory(const QVector<int> &value);

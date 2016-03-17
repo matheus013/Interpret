@@ -3,6 +3,7 @@
 
 #include "interp.h"
 
+
 int main(int argc, char *argv[]) {
     Q_UNUSED(argc); Q_UNUSED(argv);
 
@@ -14,7 +15,6 @@ int main(int argc, char *argv[]) {
         QTextStream input(stdin);
         QStringList memoryInput =
                 input.readLine().split(QRegExp("\\W+"), QString::SkipEmptyParts);
-
         //Help menu
         if(memoryInput.length() == 1) {
             if(!QString::compare("h", memoryInput.at(0), Qt::CaseSensitive)) {
@@ -40,15 +40,24 @@ int main(int argc, char *argv[]) {
                 else if (!arg.compare("HALT")) { //Stop operation
                     memory.append(-5);
                 }
+                else if (!arg.compare("SUB")) { //Stop operation
+                    memory.append(-15);
+                }
+                else if (!arg.compare("MULT")) { //Stop operation
+                    memory.append(-20);
+                }
                 else {
-                    memory.append(arg.toInt());
+                    if(inter.valid(arg))
+                        memory.append(arg.toInt());
+                    else
+                        memory << -9;
                 }
             }
             //We must always have a halt operation
             //so the process will always stop
             memory.append(-5);
             memory.append(0);
-
+            (memory[0] == -20) ? memory.append(1) : memory.append(0);
             //Interpret instructions
             inter.interpreter(memory, 0);
         }

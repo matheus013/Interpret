@@ -9,7 +9,7 @@ void Interp::interpreter(QVector<int> memory, int firstAddress) {
     setMemory(memory);
     m_pc = firstAddress;
     m_runBit = true;
-    m_ac = 0;
+    m_ac = memory.last();
     while (m_runBit) {
         m_instr = memory[m_pc];
         m_instrType = getInstrType(m_instr);
@@ -24,6 +24,8 @@ void Interp::interpreter(QVector<int> memory, int firstAddress) {
 run Interp::getInstrType(int inst) {
     if(inst == -10) return ADD;
     if(inst == -5) return HALT;
+    if(inst == -15) return SUB;
+    if(inst == -20) return MULT;
     return ARG;
 }
 
@@ -38,6 +40,12 @@ void Interp::execute(run type, int data) {
     case ADD:
         m_ac += data;
         break;
+    case SUB:
+        m_ac -= data;
+        break;
+    case MULT:
+        m_ac *= data;
+        break;
     case HALT:
         m_runBit = false;
         qDebug() << "Resultado da operacao: " << m_ac;
@@ -48,6 +56,14 @@ void Interp::execute(run type, int data) {
     default:
         qDebug() << type << data;
     }
+}
+
+
+bool Interp::valid(QString arg){
+    foreach (QChar c, arg)
+        if(!QString("0123456789").contains(c))
+            return false;
+    return true;
 }
 
 void Interp::startInfo() {
@@ -65,5 +81,7 @@ void Interp::usageInfo() {
 void Interp::availableOperationsInfo() {
     qDebug() << "Instrucoes disponiveis:\n"
              << "ADD\n"
+             << "MULT\n"
+             << "SUB\n"
              << "HALT\n";
 }
